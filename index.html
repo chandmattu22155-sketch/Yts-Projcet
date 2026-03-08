@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie YTS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-b from-[#0f0f0f] to-[#1a1a1a] text-white min-h-screen overflow-x-hidden">
+  <nav class="sticky top-0 z-50 bg-[#1d1d1d] py-3 px-4 md:px-10 lg:px-20 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <img src="/images/logo-YTS-lt copy.svg" alt="logo" class="h-14">
+    </div>
+
+    <div class="flex-1 mx-4 max-w-md relative">
+      <input type="text" id="quickSearchInput" placeholder="Quick Search"
+        class="w-60 bg-gray-100 text-black px-4 py-2 rounded-3xl outline-none focus:ring-4 focus:ring-green-600 transition" />
+      <div id="quickResults" class="absolute bg-[#1c1c1c] w-full z-50"></div>
+    </div>
+
+    <div class="md:hidden">
+      <button id="menuBtn" class="text-gray-300 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div id="menu" class="hidden md:flex items-center gap-6 text-gray-300 font-semibold text-lg">
+
+      <a href="#" class="hover:text-green-400 transition">Home</a>
+      <a href="#" class="text-green-400 transition">4K</a>
+      <a href="#" class="hover:text-green-400 transition">Trending</a>
+      <a href="#" class="hover:text-green-400 transition">Browse Movies</a>
+      <a href="#" class="hover:text-white transition">Login</a>
+      <span>|</span>
+      <a href="#" class="hover:text-white transition">Register</a>
+    </div>
+  </nav>
+
+  <div id="mobileMenu" class="md:hidden  bg-[#1c1c1c] px-4 py-4">
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">Home</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">4K</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">Trending</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">Browse Movies</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-white transition">Login</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-white transition">Register</a>
+  </div>
+
+  <section class="max-w-6xl mx-auto mt-20 px-4 md:px-10">
+    <div class="flex flex-col md:flex-row gap-3 mb-6">
+      <input type="text" id="searchInput" placeholder="Search movies..."
+        class="flex-1 text-black px-4  py-1 rounded-xl text-xl border border-green-600 focus:ring-2 focus:ring-green-500 outline-none" />
+      <button id="searchBtn"
+        class="bg-green-500 hover:bg-green-600 sm:text-base md:text-base lg:text-lg px-4 sm:px-6 md:px-6 lg:px-8 py-2 sm:py-2 md:py-2 lg:py-3 rounded-2xl font-semibold transition w-[150px] sm:w-[140px] md:w-[160px] lg:w-auto">
+        Search
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-12">
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Quality</p>
+        <select name="quality"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="All">All</option>
+          <option value="480p">480p</option>
+          <option value="720p">720p</option>
+          <option value="1080p">1080p</option>
+          <option value="1080p.x265">1080p.x265</option>
+          <option value="2160p">2160p</option>
+          <option value="3D">3D</option>
+        </select>
+      </div>
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Genre</p>
+        <select name="genre"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="all">All</option>
+          <option value="Action">Action</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Animation">Animation</option>
+          <option value="Biography">Biography</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Crime">Crime</option>
+          <option value="Documentary">Documentary</option>
+          <option value="Drama">Drama</option>
+          <option value="Family">Family</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Horror">Horror</option>
+          <option value="Romance">Romance</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Thriller">Thriller</option>
+        </select>
+      </div>
+
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Rating</p>
+        <select name="minimum_rating"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="0">All</option>
+          <option value="9">9+</option>
+          <option value="8">8+</option>
+          <option value="7">7+</option>
+          <option value="6">6+</option>
+          <option value="5">5+</option>
+          <option value="4">4+</option>
+          <option value="3">3+</option>
+          <option value="2">2+</option>
+          <option value="1">1+</option>
+        </select>
+      </div>
+
+
+
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Sort by</p>
+        <select name="sort_by"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="date_added">Date Added</option>
+          <option value="title">Title</option>
+          <option value="year">Year</option>
+          <option value="rating">Rating</option>
+          <option value="seeds">Seeds</option>
+          <option value="download_count">Download Count</option>
+          <option value="like_count">Like Count</option>
+
+        </select>
+      </div>
+
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Order by</p>
+        <select name="order_by"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+      </div>
+
+
+
+      <div>
+        <p class="mb-2 text-gray-200 font-semibold text-sm md:text-lg">Limit</p>
+        <select name="limit"
+          class="filterSelect w-full bg-black text-white px-3 py-2 rounded-xl border-2 border-green-400 focus:ring-2 focus:ring-green-500 outline-none transition cursor-pointer">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+
+    </div>
+  </section>
+
+
+  <div id="loader" class="hidden fixed inset-0 flex items-center justify-center bg-black/60  backdrop-blur-sm z-50">
+    <div class="flex items-center gap-3 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-xl font-semibold">
+      <svg class="w-5 h-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      <span>Loading movies...</span>
+    </div>
+  </div>
+
+
+  <div
+    class="fetchdata bg-[#1d1d1d] mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 px-4 md:px-10 gap-6">
+
+  </div>
+
+
+  <div class="pagination-container flex justify-center mt-10 mb-10 px-2">
+    <nav id="pagination" class="flex flex-wrap justify-center gap-2"> 
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>

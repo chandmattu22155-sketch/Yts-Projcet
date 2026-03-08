@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Detail - YTS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-neutral-900 text-white min-h-screen overflow-x-hidden">
+
+  <nav class="sticky top-0 z-50 bg-black py-3 px-4 md:px-10 lg:px-20 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <img src="/images/logo-YTS-lt copy.svg" alt="logo" class="h-14">
+    </div>
+
+    <div class="flex-1 mx-4 max-w-md relative">
+      <input type="text" id="quickSearchInput" placeholder="Quick Search"
+        class="w-60 bg-gray-100 text-black px-4 py-2 rounded-3xl outline-none focus:ring-4 focus:ring-green-600 transition" />
+      <div id="quickResults" class="absolute bg-[#1c1c1c] w-full z-50"></div>
+    </div>
+
+    <div class="md:hidden">
+      <button id="menuBtn" class="text-gray-300 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div id="menu" class="hidden md:flex items-center gap-6 text-gray-300 font-semibold text-lg">
+      <a href="index.html" class="hover:text-green-400 transition">Home</a>
+      <a href="#" class="text-green-400 transition">4K</a>
+      <a href="#" class="hover:text-green-400 transition">Trending</a>
+      <a href="#" class="hover:text-green-400 transition">Browse Movies</a>
+      <a href="#" class="hover:text-white transition">Login</a>
+      <span>|</span>
+      <a href="#" class="hover:text-white transition">Register</a>
+    </div>
+  </nav>
+
+  <div id="mobileMenu" class="md:hidden hidden bg-[#1c1c1c] px-4 py-4">
+    <a href="index.html" class="block text-gray-300 py-2 hover:text-green-400 transition">Home</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">4K</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">Trending</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-green-400 transition">Browse Movies</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-white transition">Login</a>
+    <a href="#" class="block text-gray-300 py-2 hover:text-white transition">Register</a>
+  </div>
+
+
+  <div class="max-w-6xl mx-auto px-6 py-10">
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+      <div>
+        <div class="rounded-lg overflow-hidden shadow-lg">
+
+          <img id="movieImage" class="w-full  border-4 transition object-cover" />
+           
+          <button
+            class="mt-5 w-full bg-green-500 hover:bg-green-800 py-3 rounded-lg text-xl font-semibold shadow-lg transition">
+            Download
+          </button>
+
+          <div id="movieTags" class="flex flex-wrap gap-3 font-semibold mt-4"></div>
+
+        </div>
+      </div>
+
+      <div>
+
+        <h1 id="movieTitle" class="text-4xl font-bold mb-3"></h1>
+        <p id="movieYear" class="text-xl font-semibold"></p>
+        <p id="movieGenres" class="text-lg font-semibold mt-1"></p>
+
+        <div class="mt-6">
+          <p class="font-semibold mb-2">Available in:</p>
+
+          <div id="movieQualities" class="flex flex-wrap gap-3"></div>
+      
+          <p class="text-sm text-gray-400 mt-2">
+            WEB: same quality as BluRay
+          </p>
+        </div>
+
+        <button
+          class="mt-6 border border-gray-500 px-4 py-2 bg-white text-black rounded font-semibold hover:text-white hover:bg-green-500 transition">
+          Download Subtitles
+        </button>
+
+        <div class="mt-8 space-y-4">
+
+          <div class="flex items-center gap-2">
+            <span class="text-xl">❤</span>
+            <span id="movieLikes" class="text-lg"></span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <span class="bg-yellow-500 px-2 py-1 font-semibold rounded text-md">IMDb</span>
+            <span id="movieRating" class="text-lg font-semibold"></span>
+          </div>
+
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Similar Movies</h2>
+
+        <div id="similarMovies" class="grid grid-cols-2 gap-4"></div>
+
+      </div>
+    <div id="detailLoader" class="hidden fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50">
+    <div class="flex items-center gap-3 bg-indigo-600 text-white px-6 py-3 rounded-2xl shadow-xl font-semibold">
+      <svg class="w-5 h-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      <span>Loading movies...</span>
+    </div>
+  </div>
+
+    </div>
+
+    <div class="mt-12 max-w-xl ml-2 mx-auto">
+      <div class="border border-green-700 bg-gray-100 p-6 rounded-lg text-center">
+        <p class="text-green-700 font-semibold text-lg">
+          Please enable your VPN when downloading torrents
+        </p>
+
+        <p class="text-black text-md mt-2">
+          If you torrent without a VPN, your ISP can see that you're torrenting and may throttle your connection and get
+          fined by legal action!
+        </p>
+
+        <button class="mt-4 w-full bg-green-500 hover:bg-green-600 py-2 rounded-lg font-semibold transition">
+          Get Surf VPN
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <div id="movieMedia" class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 px-6 mb-10"></div>
+
+  <div id="imageModal" class="fixed inset-0 bg-black/90 hidden items-center justify-center z-50">
+
+    <button id="closeModal" class="absolute top-5 right-8 text-white text-4xl">✕</button>
+
+    <button id="prevBtn" class="absolute left-6 text-white text-4xl">❮</button>
+
+    <img id="modalImg" class="max-h-[90vh] max-w-[90vw] rounded-md">
+
+    <button id="nextBtn" class="absolute right-6 text-white text-4xl">❯</button>
+
+  </div>
+
+<div class="max-w-6xl mx-auto px-6 py-10 text-white">
+
+  <div class="flex flex-col md:flex-row justify-between gap-10">
+
+   
+    <div class="md:w-[60%] text-gray-400">
+      <h3 class="text-2xl font-bold mb-3 text-white">Plot summary</h3>
+      <p id="description"></p>
+    </div>
+
+    <div class="md:w-[35%]">
+
+      <h3 class="text-2xl font-bold mb-3">Director</h3>
+      <p id="directors" class="text-gray-300 mb-6"></p>
+
+      <h3 class="text-2xl font-bold mb-4">Top cast</h3>
+
+      <ul id="cast-list" class="space-y-3"></ul>
+
+    </div>
+
+  </div>
+
+</div>
+ 
+  <script src="detail.js"></script>
+  <script src="suggestion.js"></script>
+
+</body>
+
+</html>
